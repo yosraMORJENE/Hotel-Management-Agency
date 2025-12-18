@@ -1,0 +1,62 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Create account — Morjena Agency{% endblock %}
+
+{% block body_class %}auth-shell{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block page_wrapper %}
+<main class="auth-wrap">
+    <section class="auth-card">
+        <div class="text-center mb-4">
+            <div class="d-inline-flex align-items-center gap-2 mb-2" style="opacity: 0.95;">
+                <span class="brand-mark" aria-hidden="true">
+                    <img class="brand-logo" src="{{ asset('images/black-and-white-fish-logo-vector.jpg') }}" alt="Morjena Agency logo">
+                </span>
+                <span class="fw-bold">Morjena Agency</span>
+            </div>
+            <h2 class="mb-1">Create your account</h2>
+            <div class="text-white-50">Start managing stays and guest bookings</div>
+        </div>
+
+        {% if app.flashes('error') %}
+            <div class="alert alert-danger" role="alert">
+                {% for message in app.flashes('error') %}
+                    {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="post">
+            <div class="mb-3">
+                <label for="inputFullName" class="form-label">Full Name</label>
+                <input type="text" name="fullName" id="inputFullName" class="form-control" required autofocus>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Email Address</label>
+                <input type="email" name="email" id="inputEmail" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label">Password</label>
+                <input type="password" name="password" id="inputPassword" class="form-control" required>
+                <div class="form-text text-white-50">At least 6 characters</div>
+            </div>
+
+            <button class="w-100 btn btn-brand" type="submit">
+                <i class="fa-solid fa-user-check me-1"></i> Create account
+            </button>
+        </form>
+
+        <hr class="my-4" style="border-color: rgba(255,255,255,0.18);">
+
+        <p class="text-center mb-0">
+            Already have an account? <a href="{{ path('app_login') }}" class="auth-link">Sign in</a>
+        </p>
+    </section>
+</main>
+{% endblock %}

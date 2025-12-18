@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Guests — Morjena Agency{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Guests</h1>
+            <p class="page-subtitle">Track guest records and their associated property.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ path('client_add') }}" class="btn btn-brand">
+                <i class="fa-solid fa-circle-plus me-1"></i> Add guest
+            </a>
+        </div>
+    </div>
+
+    <div class="card card-soft">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Last Name</th>
+                            <th>Persons</th>
+                            <th>Email</th>
+                            <th>Property</th>
+                            <th>Pension</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for client in clients %}
+                            <tr>
+                                <td class="text-muted">#{{ client.id }}</td>
+                                <td class="fw-semibold">{{ client.nom }}</td>
+                                <td>{{ client.lastName }}</td>
+                                <td>{{ client.nbrPersonne }}</td>
+                                <td>{{ client.email }}</td>
+                                <td>{{ client.hotel.nomHotel }}</td>
+                                <td>{{ client.pensionType ?: '-' }}</td>
+                                <td class="text-end">
+                                    <a href="{{ path('client_show', {'id': client.id}) }}" class="btn btn-secondary btn-sm">View</a>
+                                    <a href="{{ path('client_edit', {'id': client.id}) }}" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="{{ path('client_delete', {'id': client.id}) }}" class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Are you sure you want to delete this guest?');">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

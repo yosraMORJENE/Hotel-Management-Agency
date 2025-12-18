@@ -1,0 +1,15 @@
+# Symfony
+/var/
+/vendor/
+.env
+.env.local
+.env.*.local
+
+# IDEs
+/.idea/
+/.vscode/
+
+# Logs
+/log/
+*.log
+

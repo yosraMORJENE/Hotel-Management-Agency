@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Property details — Morjena Agency{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">{{ hotel.nomHotel }}</h1>
+            <p class="page-subtitle">Property overview and current guests.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{{ path('hotel_edit', {'id': hotel.id}) }}" class="btn btn-primary">Edit</a>
+            <a href="{{ path('hotel_list') }}" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+
+    <div class="row g-3">
+        <div class="col-lg-5">
+            <div class="card card-soft h-100">
+                <div class="card-body">
+                    <h5 class="mb-3">Details</h5>
+                    <div class="d-flex justify-content-between">
+                        <div class="text-muted">Capacity</div>
+                        <div class="fw-semibold">{{ hotel.capacity }}</div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <div class="text-muted">Address</div>
+                        <div class="fw-semibold">{{ hotel.address ?: '-' }}</div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <div class="text-muted">Price</div>
+                        <div class="fw-semibold">{{ hotel.price }}</div>
+                    </div>
+                    <hr>
+                    <div>
+                        <div class="text-muted mb-2">Image</div>
+                        {% if hotel.image %}
+                            <img src="{{ hotel.image }}" alt="{{ hotel.nomHotel }}" class="img-fluid rounded" style="max-height: 220px; object-fit: cover;">
+                        {% else %}
+                            <div class="text-muted">No image</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7">
+            <div class="card card-soft h-100">
+                <div class="card-body">
+                    <h5 class="mb-3">Guests</h5>
+                    {% if clients is not empty %}
+                        <ul class="mb-0">
+                            {% for client in clients %}
+                                <li>
+                                    <span class="fw-semibold">{{ client.nom }} {{ client.lastName }}</span>
+                                    — {{ client.email }}
+                                    — {{ client.nbrPersonne }} person(s)
+                                    — {{ client.pensionType ?: '-' }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <div class="text-muted">No guests linked to this property yet.</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
