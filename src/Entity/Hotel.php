@@ -68,12 +68,18 @@ class Hotel
         return $this;
     }
 
-    public function getPrice(): ?float
+    /**
+     * Doctrine stores DECIMAL as string to preserve precision.
+     */
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    /**
+     * Accept string input (Symfony forms commonly provide numeric values as strings).
+     */
+    public function setPrice(?string $price): static
     {
         $this->price = $price;
 

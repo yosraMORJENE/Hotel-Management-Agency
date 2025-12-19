@@ -38,6 +38,10 @@ class HotelController extends AbstractController
                 $uploadDir = (string) $this->getParameter('hotel_upload_dir');
                 $publicPrefix = (string) $this->getParameter('hotel_upload_public_path');
 
+                if (!is_dir($uploadDir)) {
+                    @mkdir($uploadDir, 0775, true);
+                }
+
                 $safeBase = preg_replace('/[^a-zA-Z0-9_-]+/', '-', (string) $hotel->getNomHotel());
                 $safeBase = trim((string) $safeBase, '-') ?: 'hotel';
                 $ext = $imageFile->guessExtension() ?: 'bin';
@@ -52,7 +56,13 @@ class HotelController extends AbstractController
             $em->persist($hotel);
             $em->flush();
 
+            $this->addFlash('success', 'Hotel created successfully.');
+
             return $this->redirectToRoute('hotel_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('error', 'Please fix the form errors and try again.');
         }
 
         
@@ -97,6 +107,10 @@ class HotelController extends AbstractController
                 $uploadDir = (string) $this->getParameter('hotel_upload_dir');
                 $publicPrefix = (string) $this->getParameter('hotel_upload_public_path');
 
+                if (!is_dir($uploadDir)) {
+                    @mkdir($uploadDir, 0775, true);
+                }
+
                 $safeBase = preg_replace('/[^a-zA-Z0-9_-]+/', '-', (string) $hotel->getNomHotel());
                 $safeBase = trim((string) $safeBase, '-') ?: 'hotel';
                 $ext = $imageFile->guessExtension() ?: 'bin';
@@ -114,7 +128,13 @@ class HotelController extends AbstractController
             }
 
             $em->flush();
+
+            $this->addFlash('success', 'Hotel updated successfully.');
             return $this->redirectToRoute('hotel_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addFlash('error', 'Please fix the form errors and try again.');
         }
 
         
